@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.api.mapper.MerchantRateMapper">
+  <resultMap id="BaseResultMap" type="com.example.api.entity.MerchantRate">
+    <!--@Table tb_merchant_rate-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="merchant_id" jdbcType="BIGINT" property="merchantId" />
+    <result column="rate_id" jdbcType="BIGINT" property="rateId" />
+    <result column="total_commission" jdbcType="DECIMAL" property="totalCommission" />
+    <result column="platform_commission" jdbcType="DECIMAL" property="platformCommission" />
+    <result column="team_commossion" jdbcType="DECIMAL" property="teamCommossion" />
+    <result column="cashier_commossion" jdbcType="DECIMAL" property="cashierCommossion" />
+    <result column="is_open" jdbcType="SMALLINT" property="isOpen" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, merchant_id, rate_id, total_commission, platform_commission, team_commossion, 
+    cashier_commossion, is_open, created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_merchant_rate
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_merchant_rate
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.api.entity.MerchantRate">
+    insert into tb_merchant_rate (id, merchant_id, rate_id, 
+      total_commission, platform_commission, team_commossion, 
+      cashier_commossion, is_open, created_at, 
+      updated_at)
+    values (#{id,jdbcType=BIGINT}, #{merchantId,jdbcType=BIGINT}, #{rateId,jdbcType=BIGINT}, 
+      #{totalCommission,jdbcType=DECIMAL}, #{platformCommission,jdbcType=DECIMAL}, #{teamCommossion,jdbcType=DECIMAL}, 
+      #{cashierCommossion,jdbcType=DECIMAL}, #{isOpen,jdbcType=SMALLINT}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.api.entity.MerchantRate">
+    insert into tb_merchant_rate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="rateId != null">
+        rate_id,
+      </if>
+      <if test="totalCommission != null">
+        total_commission,
+      </if>
+      <if test="platformCommission != null">
+        platform_commission,
+      </if>
+      <if test="teamCommossion != null">
+        team_commossion,
+      </if>
+      <if test="cashierCommossion != null">
+        cashier_commossion,
+      </if>
+      <if test="isOpen != null">
+        is_open,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="rateId != null">
+        #{rateId,jdbcType=BIGINT},
+      </if>
+      <if test="totalCommission != null">
+        #{totalCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="platformCommission != null">
+        #{platformCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="teamCommossion != null">
+        #{teamCommossion,jdbcType=DECIMAL},
+      </if>
+      <if test="cashierCommossion != null">
+        #{cashierCommossion,jdbcType=DECIMAL},
+      </if>
+      <if test="isOpen != null">
+        #{isOpen,jdbcType=SMALLINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.api.entity.MerchantRate">
+    update tb_merchant_rate
+    <set>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="rateId != null">
+        rate_id = #{rateId,jdbcType=BIGINT},
+      </if>
+      <if test="totalCommission != null">
+        total_commission = #{totalCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="platformCommission != null">
+        platform_commission = #{platformCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="teamCommossion != null">
+        team_commossion = #{teamCommossion,jdbcType=DECIMAL},
+      </if>
+      <if test="cashierCommossion != null">
+        cashier_commossion = #{cashierCommossion,jdbcType=DECIMAL},
+      </if>
+      <if test="isOpen != null">
+        is_open = #{isOpen,jdbcType=SMALLINT},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.api.entity.MerchantRate">
+    update tb_merchant_rate
+    set merchant_id = #{merchantId,jdbcType=BIGINT},
+      rate_id = #{rateId,jdbcType=BIGINT},
+      total_commission = #{totalCommission,jdbcType=DECIMAL},
+      platform_commission = #{platformCommission,jdbcType=DECIMAL},
+      team_commossion = #{teamCommossion,jdbcType=DECIMAL},
+      cashier_commossion = #{cashierCommossion,jdbcType=DECIMAL},
+      is_open = #{isOpen,jdbcType=SMALLINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

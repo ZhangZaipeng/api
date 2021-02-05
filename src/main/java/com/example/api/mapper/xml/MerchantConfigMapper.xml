@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.api.mapper.MerchantConfigMapper">
+  <resultMap id="BaseResultMap" type="com.example.api.entity.MerchantConfig">
+    <!--@Table tb_merchant_config-->
+    <id column="config_id" jdbcType="BIGINT" property="configId" />
+    <result column="merchant_id" jdbcType="BIGINT" property="merchantId" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="app_secret" jdbcType="VARCHAR" property="appSecret" />
+    <result column="security_pwd" jdbcType="VARCHAR" property="securityPwd" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    config_id, merchant_id, app_id, app_secret, security_pwd, created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_merchant_config
+    where config_id = #{configId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_merchant_config
+    where config_id = #{configId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.api.entity.MerchantConfig">
+    insert into tb_merchant_config (config_id, merchant_id, app_id, 
+      app_secret, security_pwd, created_at, 
+      updated_at)
+    values (#{configId,jdbcType=BIGINT}, #{merchantId,jdbcType=BIGINT}, #{appId,jdbcType=VARCHAR}, 
+      #{appSecret,jdbcType=VARCHAR}, #{securityPwd,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.api.entity.MerchantConfig">
+    insert into tb_merchant_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="configId != null">
+        config_id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="appSecret != null">
+        app_secret,
+      </if>
+      <if test="securityPwd != null">
+        security_pwd,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="configId != null">
+        #{configId,jdbcType=BIGINT},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null">
+        #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="securityPwd != null">
+        #{securityPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.api.entity.MerchantConfig">
+    update tb_merchant_config
+    <set>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null">
+        app_secret = #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="securityPwd != null">
+        security_pwd = #{securityPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where config_id = #{configId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.api.entity.MerchantConfig">
+    update tb_merchant_config
+    set merchant_id = #{merchantId,jdbcType=BIGINT},
+      app_id = #{appId,jdbcType=VARCHAR},
+      app_secret = #{appSecret,jdbcType=VARCHAR},
+      security_pwd = #{securityPwd,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where config_id = #{configId,jdbcType=BIGINT}
+  </update>
+  <select id="selectMerchantConfigBoByMerchantAndAppId"
+    resultType="com.example.api.entity.bo.MerchantConfigBo">
+    SELECT
+      mc.config_id,
+      mc.app_id as appId,
+      mc.app_secret as appSecret,
+      mr.id as mrId,
+    CASE
+        WHEN ISNULL(mr.total_commission) THEN
+        mr.total_commission  ELSE oir.default_commission
+      END AS totalCommission,
+    CASE
+        WHEN ISNULL(mr.platform_commission) THEN
+        oir.default_platform_commission ELSE mr.platform_commission
+      END AS platformCommission,
+    CASE
+        WHEN ISNULL(mr.team_commossion) THEN
+        oir.`default_team_commission` ELSE mr.team_commossion
+      END AS teamCommossion,
+    CASE
+        WHEN ISNULL(mr.cashier_commossion) THEN
+        oir.default_cashier_commission ELSE mr.cashier_commossion
+      END AS cashierCommossion
+    FROM
+      tb_merchant_config mc
+      LEFT JOIN tb_merchant_rate mr ON mc.merchant_id = mr.merchant_id
+      LEFT JOIN tb_order_in_rate oir ON mr.rate_id = oir.id
+    WHERE
+      mc.merchant_id = #{merchantId} and mc.app_id = #{appId} and mr.rate_id = #{orderType};
+  </select>
+</mapper>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.api.mapper.OrderInRateMapper">
+  <resultMap id="BaseResultMap" type="com.example.api.entity.OrderInRate">
+    <!--@Table tb_order_in_rate-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+    <result column="order_type" jdbcType="SMALLINT" property="orderType" />
+    <result column="default_commission" jdbcType="DECIMAL" property="defaultCommission" />
+    <result column="default_platform_commission" jdbcType="DECIMAL" property="defaultPlatformCommission" />
+    <result column="default_team_commission" jdbcType="DECIMAL" property="defaultTeamCommission" />
+    <result column="cashier_commission" jdbcType="DECIMAL" property="cashierCommission" />
+    <result column="cycle_type" jdbcType="SMALLINT" property="cycleType" />
+    <result column="is_open" jdbcType="SMALLINT" property="isOpen" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, type_name, order_type, default_commission, default_platform_commission, default_team_commission, 
+    cashier_commission, cycle_type, is_open, created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_order_in_rate
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_order_in_rate
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.api.entity.OrderInRate">
+    insert into tb_order_in_rate (id, type_name, order_type, 
+      default_commission, default_platform_commission, 
+      default_team_commission, cashier_commission, 
+      cycle_type, is_open, created_at, 
+      updated_at)
+    values (#{id,jdbcType=BIGINT}, #{typeName,jdbcType=VARCHAR}, #{orderType,jdbcType=SMALLINT}, 
+      #{defaultCommission,jdbcType=DECIMAL}, #{defaultPlatformCommission,jdbcType=DECIMAL}, 
+      #{defaultTeamCommission,jdbcType=DECIMAL}, #{cashierCommission,jdbcType=DECIMAL}, 
+      #{cycleType,jdbcType=SMALLINT}, #{isOpen,jdbcType=SMALLINT}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.api.entity.OrderInRate">
+    insert into tb_order_in_rate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="typeName != null">
+        type_name,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="defaultCommission != null">
+        default_commission,
+      </if>
+      <if test="defaultPlatformCommission != null">
+        default_platform_commission,
+      </if>
+      <if test="defaultTeamCommission != null">
+        default_team_commission,
+      </if>
+      <if test="cashierCommission != null">
+        cashier_commission,
+      </if>
+      <if test="cycleType != null">
+        cycle_type,
+      </if>
+      <if test="isOpen != null">
+        is_open,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="typeName != null">
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=SMALLINT},
+      </if>
+      <if test="defaultCommission != null">
+        #{defaultCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="defaultPlatformCommission != null">
+        #{defaultPlatformCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="defaultTeamCommission != null">
+        #{defaultTeamCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="cashierCommission != null">
+        #{cashierCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="cycleType != null">
+        #{cycleType,jdbcType=SMALLINT},
+      </if>
+      <if test="isOpen != null">
+        #{isOpen,jdbcType=SMALLINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.api.entity.OrderInRate">
+    update tb_order_in_rate
+    <set>
+      <if test="typeName != null">
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=SMALLINT},
+      </if>
+      <if test="defaultCommission != null">
+        default_commission = #{defaultCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="defaultPlatformCommission != null">
+        default_platform_commission = #{defaultPlatformCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="defaultTeamCommission != null">
+        default_team_commission = #{defaultTeamCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="cashierCommission != null">
+        cashier_commission = #{cashierCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="cycleType != null">
+        cycle_type = #{cycleType,jdbcType=SMALLINT},
+      </if>
+      <if test="isOpen != null">
+        is_open = #{isOpen,jdbcType=SMALLINT},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.api.entity.OrderInRate">
+    update tb_order_in_rate
+    set type_name = #{typeName,jdbcType=VARCHAR},
+      order_type = #{orderType,jdbcType=SMALLINT},
+      default_commission = #{defaultCommission,jdbcType=DECIMAL},
+      default_platform_commission = #{defaultPlatformCommission,jdbcType=DECIMAL},
+      default_team_commission = #{defaultTeamCommission,jdbcType=DECIMAL},
+      cashier_commission = #{cashierCommission,jdbcType=DECIMAL},
+      cycle_type = #{cycleType,jdbcType=SMALLINT},
+      is_open = #{isOpen,jdbcType=SMALLINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
