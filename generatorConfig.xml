@@ -42,7 +42,7 @@
       <property name="methodNameCalculator" value="extended"/>
     </javaClientGenerator>
 
-    <table tableName="tb_order_in_rate" domainObjectName="OrderInRate"
+    <table tableName="tb_order_in" domainObjectName="OrderIn"
       enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
       enableSelectByExample="false" selectByExampleQueryId="false">
     </table>

@@ -2,7 +2,9 @@ package com.example.api.mapper;
 
 import com.example.api.config.mybatis.DefaultMapper;
 import com.example.api.entity.SystemConfig;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface SystemConfigMapper extends DefaultMapper {
     int deleteByPrimaryKey(String key);
 

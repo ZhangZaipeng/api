@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.api.mapper.OrderInMapper">
+  <resultMap id="BaseResultMap" type="com.example.api.entity.OrderIn">
+    <!--@Table tb_order_in-->
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="order_token" jdbcType="VARCHAR" property="orderToken" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="merchant_id" jdbcType="BIGINT" property="merchantId" />
+    <result column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
+    <result column="nonce_str" jdbcType="VARCHAR" property="nonceStr" />
+    <result column="order_type" jdbcType="SMALLINT" property="orderType" />
+    <result column="order_amt" jdbcType="DECIMAL" property="orderAmt" />
+    <result column="pay_amt" jdbcType="DECIMAL" property="payAmt" />
+    <result column="notify_url" jdbcType="VARCHAR" property="notifyUrl" />
+    <result column="order_platform_commission" jdbcType="DECIMAL" property="orderPlatformCommission" />
+    <result column="order_team_commission" jdbcType="DECIMAL" property="orderTeamCommission" />
+    <result column="order_cashier_commission" jdbcType="DECIMAL" property="orderCashierCommission" />
+    <result column="order_allocation_time" jdbcType="TIMESTAMP" property="orderAllocationTime" />
+    <result column="order_confirm_time" jdbcType="TIMESTAMP" property="orderConfirmTime" />
+    <result column="confirm_operator_id" jdbcType="BIGINT" property="confirmOperatorId" />
+    <result column="receive_account" jdbcType="VARCHAR" property="receiveAccount" />
+    <result column="receive_real_name" jdbcType="VARCHAR" property="receiveRealName" />
+    <result column="receive_url" jdbcType="VARCHAR" property="receiveUrl" />
+    <result column="callback_notify_url" jdbcType="VARCHAR" property="callbackNotifyUrl" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, order_token, app_id, merchant_id, member_id, out_trade_no, nonce_str, order_type, 
+    order_amt, pay_amt, notify_url, order_platform_commission, order_team_commission, 
+    order_cashier_commission, order_allocation_time, order_confirm_time, confirm_operator_id, 
+    receive_account, receive_real_name, receive_url, callback_notify_url, status, remark, 
+    created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_order_in
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_order_in
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.api.entity.OrderIn">
+    insert into tb_order_in (order_id, order_token, app_id, 
+      merchant_id, member_id, out_trade_no, 
+      nonce_str, order_type, order_amt, 
+      pay_amt, notify_url, order_platform_commission, 
+      order_team_commission, order_cashier_commission, 
+      order_allocation_time, order_confirm_time, 
+      confirm_operator_id, receive_account, receive_real_name, 
+      receive_url, callback_notify_url, status, 
+      remark, created_at, updated_at
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{orderToken,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
+      #{merchantId,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{outTradeNo,jdbcType=VARCHAR}, 
+      #{nonceStr,jdbcType=VARCHAR}, #{orderType,jdbcType=SMALLINT}, #{orderAmt,jdbcType=DECIMAL}, 
+      #{payAmt,jdbcType=DECIMAL}, #{notifyUrl,jdbcType=VARCHAR}, #{orderPlatformCommission,jdbcType=DECIMAL}, 
+      #{orderTeamCommission,jdbcType=DECIMAL}, #{orderCashierCommission,jdbcType=DECIMAL}, 
+      #{orderAllocationTime,jdbcType=TIMESTAMP}, #{orderConfirmTime,jdbcType=TIMESTAMP}, 
+      #{confirmOperatorId,jdbcType=BIGINT}, #{receiveAccount,jdbcType=VARCHAR}, #{receiveRealName,jdbcType=VARCHAR}, 
+      #{receiveUrl,jdbcType=VARCHAR}, #{callbackNotifyUrl,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
+      #{remark,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.api.entity.OrderIn">
+    insert into tb_order_in
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orderToken != null">
+        order_token,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no,
+      </if>
+      <if test="nonceStr != null">
+        nonce_str,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="orderAmt != null">
+        order_amt,
+      </if>
+      <if test="payAmt != null">
+        pay_amt,
+      </if>
+      <if test="notifyUrl != null">
+        notify_url,
+      </if>
+      <if test="orderPlatformCommission != null">
+        order_platform_commission,
+      </if>
+      <if test="orderTeamCommission != null">
+        order_team_commission,
+      </if>
+      <if test="orderCashierCommission != null">
+        order_cashier_commission,
+      </if>
+      <if test="orderAllocationTime != null">
+        order_allocation_time,
+      </if>
+      <if test="orderConfirmTime != null">
+        order_confirm_time,
+      </if>
+      <if test="confirmOperatorId != null">
+        confirm_operator_id,
+      </if>
+      <if test="receiveAccount != null">
+        receive_account,
+      </if>
+      <if test="receiveRealName != null">
+        receive_real_name,
+      </if>
+      <if test="receiveUrl != null">
+        receive_url,
+      </if>
+      <if test="callbackNotifyUrl != null">
+        callback_notify_url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderToken != null">
+        #{orderToken,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="outTradeNo != null">
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nonceStr != null">
+        #{nonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=SMALLINT},
+      </if>
+      <if test="orderAmt != null">
+        #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="payAmt != null">
+        #{payAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="notifyUrl != null">
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPlatformCommission != null">
+        #{orderPlatformCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="orderTeamCommission != null">
+        #{orderTeamCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="orderCashierCommission != null">
+        #{orderCashierCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="orderAllocationTime != null">
+        #{orderAllocationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderConfirmTime != null">
+        #{orderConfirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmOperatorId != null">
+        #{confirmOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="receiveAccount != null">
+        #{receiveAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveRealName != null">
+        #{receiveRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUrl != null">
+        #{receiveUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="callbackNotifyUrl != null">
+        #{callbackNotifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.api.entity.OrderIn">
+    update tb_order_in
+    <set>
+      <if test="orderToken != null">
+        order_token = #{orderToken,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nonceStr != null">
+        nonce_str = #{nonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=SMALLINT},
+      </if>
+      <if test="orderAmt != null">
+        order_amt = #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="payAmt != null">
+        pay_amt = #{payAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="notifyUrl != null">
+        notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPlatformCommission != null">
+        order_platform_commission = #{orderPlatformCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="orderTeamCommission != null">
+        order_team_commission = #{orderTeamCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="orderCashierCommission != null">
+        order_cashier_commission = #{orderCashierCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="orderAllocationTime != null">
+        order_allocation_time = #{orderAllocationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderConfirmTime != null">
+        order_confirm_time = #{orderConfirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmOperatorId != null">
+        confirm_operator_id = #{confirmOperatorId,jdbcType=BIGINT},
+      </if>
+      <if test="receiveAccount != null">
+        receive_account = #{receiveAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveRealName != null">
+        receive_real_name = #{receiveRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUrl != null">
+        receive_url = #{receiveUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="callbackNotifyUrl != null">
+        callback_notify_url = #{callbackNotifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.api.entity.OrderIn">
+    update tb_order_in
+    set order_token = #{orderToken,jdbcType=VARCHAR},
+      app_id = #{appId,jdbcType=VARCHAR},
+      merchant_id = #{merchantId,jdbcType=BIGINT},
+      member_id = #{memberId,jdbcType=BIGINT},
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      nonce_str = #{nonceStr,jdbcType=VARCHAR},
+      order_type = #{orderType,jdbcType=SMALLINT},
+      order_amt = #{orderAmt,jdbcType=DECIMAL},
+      pay_amt = #{payAmt,jdbcType=DECIMAL},
+      notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      order_platform_commission = #{orderPlatformCommission,jdbcType=DECIMAL},
+      order_team_commission = #{orderTeamCommission,jdbcType=DECIMAL},
+      order_cashier_commission = #{orderCashierCommission,jdbcType=DECIMAL},
+      order_allocation_time = #{orderAllocationTime,jdbcType=TIMESTAMP},
+      order_confirm_time = #{orderConfirmTime,jdbcType=TIMESTAMP},
+      confirm_operator_id = #{confirmOperatorId,jdbcType=BIGINT},
+      receive_account = #{receiveAccount,jdbcType=VARCHAR},
+      receive_real_name = #{receiveRealName,jdbcType=VARCHAR},
+      receive_url = #{receiveUrl,jdbcType=VARCHAR},
+      callback_notify_url = #{callbackNotifyUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>
