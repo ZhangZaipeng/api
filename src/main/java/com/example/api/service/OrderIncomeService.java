@@ -1,5 +1,6 @@
 package com.example.api.service;
 
+import com.example.api.controller.OrderInVo;
 import com.example.api.entity.bo.MatchMemberBo;
 import com.example.api.entity.bo.MerchantConfigBo;
 import com.example.api.entity.bo.OrderIncomeBo;
@@ -11,11 +12,5 @@ public interface OrderIncomeService {
 
   void checkParam(OrderIncomeBo orderIncomeBo, MerchantConfigBo merchantConfigBo);
 
-  /**
-   * 订单通知 请求会调处理
-   * @param requestCallBackBo
-   */
-  void processCallBackRecharge(RequestCallBackBo requestCallBackBo) throws RemoteAccessException;
-
-  boolean updateOrderInMatch(String orderId, MatchMemberBo ret);
+  OrderInVo selectOrderInByToken(String token);
 }

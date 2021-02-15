@@ -4,15 +4,20 @@ import com.example.api.common.exception.ResultErrException;
 import com.example.api.common.response.ResponseCode;
 import com.example.api.common.tools.Conv;
 import com.example.api.common.tools.PayUtil;
+import com.example.api.common.tools.StringUtils;
 import com.example.api.common.tools.YvanUtil;
+import com.example.api.controller.OrderInVo;
+import com.example.api.entity.OrderIn;
 import com.example.api.entity.bo.MatchMemberBo;
 import com.example.api.entity.bo.MerchantConfigBo;
 import com.example.api.entity.bo.OrderIncomeBo;
 import com.example.api.entity.bo.RequestCallBackBo;
+import com.example.api.mapper.OrderInMapper;
 import com.example.api.service.OrderIncomeService;
 import java.math.BigDecimal;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.remoting.RemoteAccessException;
 import org.springframework.stereotype.Service;
@@ -23,6 +28,9 @@ public class OrderIncomeServiceImpl implements OrderIncomeService {
 
   @Value("${payment.signOpen}")
   private boolean signOpen;
+
+  @Autowired
+  private OrderInMapper orderInMapper;
 
   @Override
   public void checkParam(OrderIncomeBo orderIncomeBo, MerchantConfigBo merchantConfigBo) {
@@ -64,13 +72,27 @@ public class OrderIncomeServiceImpl implements OrderIncomeService {
   }
 
   @Override
-  public void processCallBackRecharge(RequestCallBackBo requestCallBackBo)
-      throws RemoteAccessException {
+  public OrderInVo selectOrderInByToken(String token) {
 
-  }
+    // 查出订单
+    String orderId = PayUtil.desDecode(token);
+    if (StringUtils.isEmpty(orderId)) {
+      return null;
+    }
 
-  @Override
-  public boolean updateOrderInMatch(String orderId, MatchMemberBo ret) {
-    return false;
+
+    OrderIn orderIn = orderInMapper.selectByPrimaryKey(orderId);
+    if (orderIn == null) {
+      return null;
+    }
+
+    OrderInVo orderInVo = new OrderInVo();
+    orderInVo.setOrderId(orderIn.getOrderId());
+    orderInVo.setPayAmt(orderIn.getPayAmt().stripTrailingZeros().toPlainString());
+    orderInVo.setRealName(orderIn.getReceiveRealName());
+    orderInVo.setAccount(orderIn.getReceiveAccount());
+    orderInVo.setAddress(orderIn.getReceiveUrl());
+
+    return orderInVo;
   }
 }

@@ -6,16 +6,23 @@ import com.example.api.common.tools.Conv;
 import com.example.api.common.tools.HttpParameterParser;
 import com.example.api.common.tools.StringUtils;
 import com.example.api.entity.bo.PayUnifiedorderDto;
+import com.example.api.service.OrderIncomeService;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller("/page")
+@Controller
 @RequestMapping("/orderin")
 public class OrderInPageController {
+
+  @Autowired
+  private OrderIncomeService orderIncomeService;
 
   /**
    * @return
@@ -26,8 +33,18 @@ public class OrderInPageController {
 
     String token = httpParameterParser.getString("token");
     if (StringUtils.isNullOrEmpty(token)) {
+      return new ModelAndView("public/404");
     }
 
-    return new ModelAndView("alipayscantobank");
+    OrderInVo orderInVo = orderIncomeService.selectOrderInByToken(token);
+
+    if (orderInVo == null) {
+      return new ModelAndView("public/404");
+    }
+
+    Map<String, Object> data = new HashMap<>();
+    data.put("orderInVo", orderInVo);
+
+    return new ModelAndView("order/alipayscantobank", data);
   }
 }
