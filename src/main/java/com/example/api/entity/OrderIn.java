@@ -13,6 +13,8 @@ public class OrderIn implements Serializable {
 
     private Long merchantId;
 
+    private String merchantUserId;
+
     private Long memberId;
 
     private String outTradeNo;
@@ -24,8 +26,6 @@ public class OrderIn implements Serializable {
     private BigDecimal orderAmt;
 
     private BigDecimal payAmt;
-
-    private String notifyUrl;
 
     private BigDecimal orderPlatformCommission;
 
@@ -89,6 +89,14 @@ public class OrderIn implements Serializable {
         this.merchantId = merchantId;
     }
 
+    public String getMerchantUserId() {
+        return merchantUserId;
+    }
+
+    public void setMerchantUserId(String merchantUserId) {
+        this.merchantUserId = merchantUserId;
+    }
+
     public Long getMemberId() {
         return memberId;
     }
@@ -135,14 +143,6 @@ public class OrderIn implements Serializable {
 
     public void setPayAmt(BigDecimal payAmt) {
         this.payAmt = payAmt;
-    }
-
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
-
-    public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
     }
 
     public BigDecimal getOrderPlatformCommission() {
@@ -273,13 +273,13 @@ public class OrderIn implements Serializable {
             && (this.getOrderToken() == null ? other.getOrderToken() == null : this.getOrderToken().equals(other.getOrderToken()))
             && (this.getAppId() == null ? other.getAppId() == null : this.getAppId().equals(other.getAppId()))
             && (this.getMerchantId() == null ? other.getMerchantId() == null : this.getMerchantId().equals(other.getMerchantId()))
+            && (this.getMerchantUserId() == null ? other.getMerchantUserId() == null : this.getMerchantUserId().equals(other.getMerchantUserId()))
             && (this.getMemberId() == null ? other.getMemberId() == null : this.getMemberId().equals(other.getMemberId()))
             && (this.getOutTradeNo() == null ? other.getOutTradeNo() == null : this.getOutTradeNo().equals(other.getOutTradeNo()))
             && (this.getNonceStr() == null ? other.getNonceStr() == null : this.getNonceStr().equals(other.getNonceStr()))
             && (this.getOrderType() == null ? other.getOrderType() == null : this.getOrderType().equals(other.getOrderType()))
             && (this.getOrderAmt() == null ? other.getOrderAmt() == null : this.getOrderAmt().equals(other.getOrderAmt()))
             && (this.getPayAmt() == null ? other.getPayAmt() == null : this.getPayAmt().equals(other.getPayAmt()))
-            && (this.getNotifyUrl() == null ? other.getNotifyUrl() == null : this.getNotifyUrl().equals(other.getNotifyUrl()))
             && (this.getOrderPlatformCommission() == null ? other.getOrderPlatformCommission() == null : this.getOrderPlatformCommission().equals(other.getOrderPlatformCommission()))
             && (this.getOrderTeamCommission() == null ? other.getOrderTeamCommission() == null : this.getOrderTeamCommission().equals(other.getOrderTeamCommission()))
             && (this.getOrderCashierCommission() == null ? other.getOrderCashierCommission() == null : this.getOrderCashierCommission().equals(other.getOrderCashierCommission()))
@@ -304,13 +304,13 @@ public class OrderIn implements Serializable {
         result = prime * result + ((getOrderToken() == null) ? 0 : getOrderToken().hashCode());
         result = prime * result + ((getAppId() == null) ? 0 : getAppId().hashCode());
         result = prime * result + ((getMerchantId() == null) ? 0 : getMerchantId().hashCode());
+        result = prime * result + ((getMerchantUserId() == null) ? 0 : getMerchantUserId().hashCode());
         result = prime * result + ((getMemberId() == null) ? 0 : getMemberId().hashCode());
         result = prime * result + ((getOutTradeNo() == null) ? 0 : getOutTradeNo().hashCode());
         result = prime * result + ((getNonceStr() == null) ? 0 : getNonceStr().hashCode());
         result = prime * result + ((getOrderType() == null) ? 0 : getOrderType().hashCode());
         result = prime * result + ((getOrderAmt() == null) ? 0 : getOrderAmt().hashCode());
         result = prime * result + ((getPayAmt() == null) ? 0 : getPayAmt().hashCode());
-        result = prime * result + ((getNotifyUrl() == null) ? 0 : getNotifyUrl().hashCode());
         result = prime * result + ((getOrderPlatformCommission() == null) ? 0 : getOrderPlatformCommission().hashCode());
         result = prime * result + ((getOrderTeamCommission() == null) ? 0 : getOrderTeamCommission().hashCode());
         result = prime * result + ((getOrderCashierCommission() == null) ? 0 : getOrderCashierCommission().hashCode());

@@ -7,13 +7,13 @@
     <result column="order_token" jdbcType="VARCHAR" property="orderToken" />
     <result column="app_id" jdbcType="VARCHAR" property="appId" />
     <result column="merchant_id" jdbcType="BIGINT" property="merchantId" />
+    <result column="merchant_user_id" jdbcType="VARCHAR" property="merchantUserId" />
     <result column="member_id" jdbcType="BIGINT" property="memberId" />
     <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
     <result column="nonce_str" jdbcType="VARCHAR" property="nonceStr" />
     <result column="order_type" jdbcType="SMALLINT" property="orderType" />
     <result column="order_amt" jdbcType="DECIMAL" property="orderAmt" />
     <result column="pay_amt" jdbcType="DECIMAL" property="payAmt" />
-    <result column="notify_url" jdbcType="VARCHAR" property="notifyUrl" />
     <result column="order_platform_commission" jdbcType="DECIMAL" property="orderPlatformCommission" />
     <result column="order_team_commission" jdbcType="DECIMAL" property="orderTeamCommission" />
     <result column="order_cashier_commission" jdbcType="DECIMAL" property="orderCashierCommission" />
@@ -30,8 +30,8 @@
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
   <sql id="Base_Column_List">
-    order_id, order_token, app_id, merchant_id, member_id, out_trade_no, nonce_str, order_type, 
-    order_amt, pay_amt, notify_url, order_platform_commission, order_team_commission, 
+    order_id, order_token, app_id, merchant_id, merchant_user_id, member_id, out_trade_no, 
+    nonce_str, order_type, order_amt, pay_amt, order_platform_commission, order_team_commission, 
     order_cashier_commission, order_allocation_time, order_confirm_time, confirm_operator_id, 
     receive_account, receive_real_name, receive_url, callback_notify_url, status, remark, 
     created_at, updated_at
@@ -48,9 +48,9 @@
   </delete>
   <insert id="insert" parameterType="com.example.api.entity.OrderIn">
     insert into tb_order_in (order_id, order_token, app_id, 
-      merchant_id, member_id, out_trade_no, 
-      nonce_str, order_type, order_amt, 
-      pay_amt, notify_url, order_platform_commission, 
+      merchant_id, merchant_user_id, member_id, 
+      out_trade_no, nonce_str, order_type, 
+      order_amt, pay_amt, order_platform_commission, 
       order_team_commission, order_cashier_commission, 
       order_allocation_time, order_confirm_time, 
       confirm_operator_id, receive_account, receive_real_name, 
@@ -58,9 +58,9 @@
       remark, created_at, updated_at
       )
     values (#{orderId,jdbcType=VARCHAR}, #{orderToken,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
-      #{merchantId,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{outTradeNo,jdbcType=VARCHAR}, 
-      #{nonceStr,jdbcType=VARCHAR}, #{orderType,jdbcType=SMALLINT}, #{orderAmt,jdbcType=DECIMAL}, 
-      #{payAmt,jdbcType=DECIMAL}, #{notifyUrl,jdbcType=VARCHAR}, #{orderPlatformCommission,jdbcType=DECIMAL}, 
+      #{merchantId,jdbcType=BIGINT}, #{merchantUserId,jdbcType=VARCHAR}, #{memberId,jdbcType=BIGINT}, 
+      #{outTradeNo,jdbcType=VARCHAR}, #{nonceStr,jdbcType=VARCHAR}, #{orderType,jdbcType=SMALLINT}, 
+      #{orderAmt,jdbcType=DECIMAL}, #{payAmt,jdbcType=DECIMAL}, #{orderPlatformCommission,jdbcType=DECIMAL}, 
       #{orderTeamCommission,jdbcType=DECIMAL}, #{orderCashierCommission,jdbcType=DECIMAL}, 
       #{orderAllocationTime,jdbcType=TIMESTAMP}, #{orderConfirmTime,jdbcType=TIMESTAMP}, 
       #{confirmOperatorId,jdbcType=BIGINT}, #{receiveAccount,jdbcType=VARCHAR}, #{receiveRealName,jdbcType=VARCHAR}, 
@@ -83,6 +83,9 @@
       <if test="merchantId != null">
         merchant_id,
       </if>
+      <if test="merchantUserId != null">
+        merchant_user_id,
+      </if>
       <if test="memberId != null">
         member_id,
       </if>
@@ -100,9 +103,6 @@
       </if>
       <if test="payAmt != null">
         pay_amt,
-      </if>
-      <if test="notifyUrl != null">
-        notify_url,
       </if>
       <if test="orderPlatformCommission != null">
         order_platform_commission,
@@ -160,6 +160,9 @@
       <if test="merchantId != null">
         #{merchantId,jdbcType=BIGINT},
       </if>
+      <if test="merchantUserId != null">
+        #{merchantUserId,jdbcType=VARCHAR},
+      </if>
       <if test="memberId != null">
         #{memberId,jdbcType=BIGINT},
       </if>
@@ -177,9 +180,6 @@
       </if>
       <if test="payAmt != null">
         #{payAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="notifyUrl != null">
-        #{notifyUrl,jdbcType=VARCHAR},
       </if>
       <if test="orderPlatformCommission != null">
         #{orderPlatformCommission,jdbcType=DECIMAL},
@@ -237,6 +237,9 @@
       <if test="merchantId != null">
         merchant_id = #{merchantId,jdbcType=BIGINT},
       </if>
+      <if test="merchantUserId != null">
+        merchant_user_id = #{merchantUserId,jdbcType=VARCHAR},
+      </if>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=BIGINT},
       </if>
@@ -254,9 +257,6 @@
       </if>
       <if test="payAmt != null">
         pay_amt = #{payAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="notifyUrl != null">
-        notify_url = #{notifyUrl,jdbcType=VARCHAR},
       </if>
       <if test="orderPlatformCommission != null">
         order_platform_commission = #{orderPlatformCommission,jdbcType=DECIMAL},
@@ -308,13 +308,13 @@
     set order_token = #{orderToken,jdbcType=VARCHAR},
       app_id = #{appId,jdbcType=VARCHAR},
       merchant_id = #{merchantId,jdbcType=BIGINT},
+      merchant_user_id = #{merchantUserId,jdbcType=VARCHAR},
       member_id = #{memberId,jdbcType=BIGINT},
       out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
       nonce_str = #{nonceStr,jdbcType=VARCHAR},
       order_type = #{orderType,jdbcType=SMALLINT},
       order_amt = #{orderAmt,jdbcType=DECIMAL},
       pay_amt = #{payAmt,jdbcType=DECIMAL},
-      notify_url = #{notifyUrl,jdbcType=VARCHAR},
       order_platform_commission = #{orderPlatformCommission,jdbcType=DECIMAL},
       order_team_commission = #{orderTeamCommission,jdbcType=DECIMAL},
       order_cashier_commission = #{orderCashierCommission,jdbcType=DECIMAL},
@@ -330,5 +330,20 @@
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByOutOrderIdAndMerchantId" resultMap="BaseResultMap">
+    select * from tb_order_in where merchant_id = #{merchantId} and out_trade_no =#{outTradeNo};
+  </select>
+
+  <update id="updateOrderDistributionInfo">
+    update tb_order_in
+    set status = '3',
+    member_id = #{ret.memberId},
+    receive_account = #{ret.account},
+    receive_real_name = #{ret.realName},
+    receive_url = #{ret.address},
+    order_allocation_time = now()
+    where order_id = #{orderId} and status in ('1', '2')
   </update>
 </mapper>

@@ -118,7 +118,8 @@
   <select id="selectMerchantConfigBoByMerchantAndAppId"
     resultType="com.example.api.entity.bo.MerchantConfigBo">
     SELECT
-      mc.config_id,
+      mc.config_id as configId,
+      mc.merchant_id as merchantId,
       mc.app_id as appId,
       mc.app_secret as appSecret,
       mr.id as mrId,

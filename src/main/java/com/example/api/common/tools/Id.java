@@ -18,7 +18,7 @@ public class Id {
    * 初始化ID
    */
   public static synchronized void newInstance(int serviceId) {
-    if (id != null) {
+    if (id == null) {
       id = new Id();
       id.snowflake = new Snowflake(serviceId % 31, serviceId / 31);
     }

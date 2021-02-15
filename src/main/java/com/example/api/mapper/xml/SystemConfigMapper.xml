@@ -12,20 +12,20 @@
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
   <sql id="Base_Column_List">
-    key, remark1, remark2, remark3, description, created_at, updated_at
+    `key`, remark1, remark2, remark3, description, created_at, updated_at
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_system_config
-    where key = #{key,jdbcType=VARCHAR}
+    where `key` = #{key,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_system_config
-    where key = #{key,jdbcType=VARCHAR}
+    where `key` = #{key,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.example.api.entity.SystemConfig">
-    insert into tb_system_config (key, remark1, remark2, 
+    insert into tb_system_config (`key`, remark1, remark2,
       remark3, description, created_at, 
       updated_at)
     values (#{key,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
@@ -36,7 +36,7 @@
     insert into tb_system_config
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="key != null">
-        key,
+        `key`,
       </if>
       <if test="remark1 != null">
         remark1,
@@ -103,7 +103,7 @@
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where key = #{key,jdbcType=VARCHAR}
+    where `key` = #{key,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.api.entity.SystemConfig">
     update tb_system_config
@@ -113,6 +113,6 @@
       description = #{description,jdbcType=VARCHAR},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP}
-    where key = #{key,jdbcType=VARCHAR}
+    where `key` = #{key,jdbcType=VARCHAR}
   </update>
 </mapper>

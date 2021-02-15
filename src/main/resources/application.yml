@@ -9,7 +9,7 @@ server:
     min-spare-threads: 50 # 初始化线程是20
     basedir: /home/www/tmp
   connection-timeout: 20000
-  context-path: /api
+  context-path: /pay
 
 # javamelody
 javamelody:

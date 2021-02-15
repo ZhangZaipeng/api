@@ -9,30 +9,52 @@ import com.example.api.common.tools.StringUtils;
 import com.example.api.entity.bo.OrderIncomeBo;
 import com.example.api.entity.bo.PayUnifiedorderDto;
 import com.example.api.service.impl.unifiedorder.PayIncomeFactory;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.math.BigDecimal;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 入
  */
 @RestController("/order/income")
-public class OrderIncomeController {
+@Api("入款下单相关接口")
+@RequestMapping("/order/income")
+public class OrderInController {
 
   /**
    *
    */
   @PostMapping("/unifiedorder.json")
-  @ApiOperation(value = "下单", httpMethod = "GET", response = PayUnifiedorderDto.class)
+  @ApiOperation(value = "下单", httpMethod = "POST", response = PayUnifiedorderDto.class)
   @ApiImplicitParams({
       @ApiImplicitParam(name = "appId", value = "应用ID",
-          required = false, paramType = "form", dataType = "Int", defaultValue = "7"),
+          required = true, paramType = "form", dataType = "string", defaultValue = "1"),
+      @ApiImplicitParam(name = "merchantId", value = "商户ID",
+          required = true, paramType = "form", dataType = "string", defaultValue = "700001"),
+      @ApiImplicitParam(name = "outTradeNo", value = "商户订单号",
+          required = true, paramType = "form", dataType = "string", defaultValue = "7"),
+      @ApiImplicitParam(name = "merchantUserId", value = "商户用户ID",
+          required = true, paramType = "form", dataType = "string", defaultValue = "7"),
+      @ApiImplicitParam(name = "nonceStr", value = "随机字符串为4位字符串",
+          required = true, paramType = "form", dataType = "string", defaultValue = "1234"),
+      @ApiImplicitParam(name = "notifyUrl", value = "回调地址",
+          required = true, paramType = "form", dataType = "string", defaultValue = "http://www.baidu.com"),
+      @ApiImplicitParam(name = "orderAmt", value = "订单金额",
+          required = true, paramType = "form", dataType = "string", defaultValue = "100"),
+      @ApiImplicitParam(name = "payType", value = "支付方式",
+          required = true, paramType = "form", dataType = "string", defaultValue = "1"),
+      @ApiImplicitParam(name = "remark", value = "备注信息",
+      required = false, paramType = "form", dataType = "string", defaultValue = "备注"),
+      @ApiImplicitParam(name = "sign", value = "签名",
+          required = true, paramType = "form", dataType = "string", defaultValue = "sign"),
   })
-  public ResponseModel recharge(HttpServletRequest request) {
+  public ResponseModel unifiedorder(HttpServletRequest request) {
     HttpParameterParser httpParameterParser = HttpParameterParser.newInstance(request);
 
     String appId = httpParameterParser.getString("appId");
@@ -48,6 +70,11 @@ public class OrderIncomeController {
     String outTradeNo = httpParameterParser.getString("outTradeNo");
     if (StringUtils.isNullOrEmpty(outTradeNo)) {
       return ResponseModel.getModel(ResponseCode.FAIL, "商户订单号为空");
+    }
+
+    String merchantUserId = httpParameterParser.getString("merchantUserId");
+    if (StringUtils.isNullOrEmpty(outTradeNo)) {
+      return ResponseModel.getModel(ResponseCode.FAIL, "商户用户ID为空");
     }
 
     String nonceStr = httpParameterParser.getString("nonceStr");
@@ -69,8 +96,8 @@ public class OrderIncomeController {
     }
 
     BigDecimal amount = Conv.NDec(orderAmt);
-    if (amount.compareTo(BigDecimal.ZERO) == -1) {
-      return ResponseModel.getModel(ResponseCode.FAIL, "交易币种数量需要大于0");
+    if (amount.compareTo(BigDecimal.ONE) == -1) {
+      return ResponseModel.getModel(ResponseCode.FAIL, "交易币种数量需要大于1");
     }
 
     String payType = httpParameterParser.getString("payType");
@@ -90,8 +117,8 @@ public class OrderIncomeController {
       return ResponseModel.getModel(ResponseCode.FAIL, "sign为空");
     }
 
-    OrderIncomeBo orderIncomeBo = new OrderIncomeBo(appId,merchantId,outTradeNo, nonceStr,
-        notifyUrl,amount,orderTypeEnum, remark, sign);
+    OrderIncomeBo orderIncomeBo = new OrderIncomeBo(appId,merchantId,outTradeNo,merchantUserId,nonceStr,
+        notifyUrl,orderAmt,payType, remark, sign);
 
     PayUnifiedorderDto payUnifiedorderDto =
         PayIncomeFactory.getPayEngineService(orderTypeEnum).unifiedorder(orderIncomeBo);

@@ -52,3 +52,5 @@ spring:
   mvc:
     static-path-pattern: /static/**
 
+payment:
+  signOpen: false

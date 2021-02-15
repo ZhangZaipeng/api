@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.api.mapper.MemberReceivablesMapper">
+  <resultMap id="BaseResultMap" type="com.example.api.entity.MemberReceivables">
+    <!--@Table tb_member_receivables-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="is_open" jdbcType="SMALLINT" property="isOpen" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="type" jdbcType="SMALLINT" property="type" />
+    <result column="w" jdbcType="INTEGER" property="w" />
+    <result column="l" jdbcType="INTEGER" property="l" />
+    <result column="r" jdbcType="INTEGER" property="r" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, member_id, is_open, real_name, account, address, type, w, l, r, created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_member_receivables
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_member_receivables
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.api.entity.MemberReceivables">
+    insert into tb_member_receivables (id, member_id, is_open, 
+      real_name, account, address, 
+      type, w, l, r, 
+      created_at, updated_at)
+    values (#{id,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{isOpen,jdbcType=SMALLINT}, 
+      #{realName,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{type,jdbcType=SMALLINT}, #{w,jdbcType=INTEGER}, #{l,jdbcType=INTEGER}, #{r,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.api.entity.MemberReceivables">
+    insert into tb_member_receivables
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="isOpen != null">
+        is_open,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="w != null">
+        w,
+      </if>
+      <if test="l != null">
+        l,
+      </if>
+      <if test="r != null">
+        r,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="isOpen != null">
+        #{isOpen,jdbcType=SMALLINT},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="w != null">
+        #{w,jdbcType=INTEGER},
+      </if>
+      <if test="l != null">
+        #{l,jdbcType=INTEGER},
+      </if>
+      <if test="r != null">
+        #{r,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.api.entity.MemberReceivables">
+    update tb_member_receivables
+    <set>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="isOpen != null">
+        is_open = #{isOpen,jdbcType=SMALLINT},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="w != null">
+        w = #{w,jdbcType=INTEGER},
+      </if>
+      <if test="l != null">
+        l = #{l,jdbcType=INTEGER},
+      </if>
+      <if test="r != null">
+        r = #{r,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.api.entity.MemberReceivables">
+    update tb_member_receivables
+    set member_id = #{memberId,jdbcType=BIGINT},
+      is_open = #{isOpen,jdbcType=SMALLINT},
+      real_name = #{realName,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      type = #{type,jdbcType=SMALLINT},
+      w = #{w,jdbcType=INTEGER},
+      l = #{l,jdbcType=INTEGER},
+      r = #{r,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectMatchMemberList"
+    resultType="com.example.api.entity.bo.MatchMemberBo">
+    SELECT
+      member_id as memberId,
+      `type` as payType,
+      real_name as realName,
+      account, address, w
+    FROM `tb_member_receivables`
+    WHERE `type` = #{payType} and is_open = '1'
+    <if test="unitAmt != null">
+      and r >= #{unitAmt} and #{unitAmt} >= l
+    </if>
+  </select>
+</mapper>

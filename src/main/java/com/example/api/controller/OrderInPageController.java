@@ -14,14 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller("/page")
-@RequestMapping("/page")
-public class OrderIncomePageController {
+@RequestMapping("/orderin")
+public class OrderInPageController {
 
   /**
    * @return
    */
-  @RequestMapping("/1.htm")
-  public ModelAndView recharge() {
+  @RequestMapping("/page.htm")
+  public ModelAndView page(HttpServletRequest request) {
+    HttpParameterParser httpParameterParser = HttpParameterParser.newInstance(request);
+
+    String token = httpParameterParser.getString("token");
+    if (StringUtils.isNullOrEmpty(token)) {
+    }
+
     return new ModelAndView("alipayscantobank");
   }
 }

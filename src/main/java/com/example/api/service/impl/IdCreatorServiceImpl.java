@@ -16,7 +16,7 @@ public class IdCreatorServiceImpl implements IdCreatorService {
 
   Logger logger = LoggerFactory.getLogger(IdCreatorServiceImpl.class);
   // yyyy-MM-dd HH
-  private static final SimpleDateFormat SDF = new SimpleDateFormat("yyMMddHH");
+  private static final SimpleDateFormat SDF = new SimpleDateFormat("MMddHH");
 
   @Override
   public String nextValue(OrderTypeEnum recordTypeEnum, long orderTime) {

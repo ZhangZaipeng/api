@@ -85,7 +85,7 @@ CREATE TABLE `tb_merchant_rate` (
 
 -- 收款员 收款码表
 CREATE TABLE `tb_receivables` (
-  `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '收款员 userId',
+  `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `member_id` bigint(11) NOT NULL COMMENT '收款员 userId',
   `is_open` smallint(1) DEFAULT '0' COMMENT '打开方式  0：未开启 1：开启',
   `real_name` varchar(20) DEFAULT NULL COMMENT '账号昵称，姓名',
